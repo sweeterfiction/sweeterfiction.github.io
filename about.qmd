@@ -1,0 +1,8 @@
+---
+title: "about"
+page-layout: article
+---
+
+Research notes and explorations from sweeterfiction. Posts here are mostly data analysis, visualization, and methodology — often rendered directly from Jupyter notebooks.
+
+You can find me on [GitHub](https://github.com/sweeterfiction).

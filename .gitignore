@@ -1,0 +1,36 @@
+# Quarto
+.quarto/
+_freeze/
+*_cache/
+
+# Python
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+*.egg-info/
+.env
+.venv/
+env/
+
+# Data files (keep out of repo; commit only notebook outputs)
+*.csv
+*.xls
+*.xlsx
+*.parquet
+*.feather
+*.h5
+*.hdf5
+*.db
+*.sqlite
+
+# Large/binary assets
+*.pdf
+*.zip
+*.tar.gz
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Claude
+.claude/

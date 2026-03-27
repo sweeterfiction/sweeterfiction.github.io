@@ -1,0 +1,10 @@
+22:42:28.108  ERROR  mux::connui > 
+Failed: Error: Fatal: Socket error: disconnected
+
+22:42:28.112  ERROR  mux::connui > while running ConnectionUI loop: recv_timeout: channel is empty and disconnected
+22:42:28.112  ERROR  wezterm_gui > Error: Fatal: Socket error: disconnected; terminating
+22:45:41.543  ERROR  mux::connui > 
+Failed: Error: Fatal: Socket error: disconnected
+
+22:45:41.545  ERROR  wezterm_gui > Error: Fatal: Socket error: disconnected; terminating
+22:45:41.548  ERROR  mux::connui > while running ConnectionUI loop: recv_timeout: channel is empty and disconnected

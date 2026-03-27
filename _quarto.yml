@@ -1,0 +1,25 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "sweeterfiction"
+  description: "notes on data & research"
+  navbar:
+    left:
+      - href: index.qmd
+        text: home
+    right:
+      - href: about.qmd
+        text: about
+  page-footer:
+    center: ""
+
+format:
+  html:
+    theme:
+      - cosmo
+      - styles.scss
+    toc: false
+    fig-align: center
+    html-math-method: mathjax

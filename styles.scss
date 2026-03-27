@@ -1,0 +1,22 @@
+/*-- scss:defaults --*/
+
+/*-- scss:rules --*/
+
+/* Make Vega-Lite / Altair embeds fill the column width */
+.vega-embed {
+  width: 100% !important;
+}
+.vega-embed canvas,
+.vega-embed svg {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Constrain navbar content to match the page column width */
+.navbar > .container,
+.navbar > .container-fluid,
+.navbar > .container-xxl {
+  max-width: 860px;
+  margin-left: auto;
+  margin-right: auto;
+}
