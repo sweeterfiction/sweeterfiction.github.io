@@ -1,0 +1,1703 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2026-02-08">
+<meta name="description" content="Are parks visited more when they’re close together? A spatial analysis of clustering and visitation across U.S. national parks.">
+
+<title>American national park visits: location density and visitation rates – sweeterfiction § blog</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">sweeterfiction § blog</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">home</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">about</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#data-choices-and-justifications" id="toc-data-choices-and-justifications" class="nav-link active" data-scroll-target="#data-choices-and-justifications">Data choices and justifications</a></li>
+  <li><a href="#approaches" id="toc-approaches" class="nav-link" data-scroll-target="#approaches">Approaches</a>
+  <ul class="collapse">
+  <li><a href="#approach-1-neighbor-count" id="toc-approach-1-neighbor-count" class="nav-link" data-scroll-target="#approach-1-neighbor-count">Approach 1: neighbor count</a></li>
+  <li><a href="#approach-2-grid-based-analysis" id="toc-approach-2-grid-based-analysis" class="nav-link" data-scroll-target="#approach-2-grid-based-analysis">Approach 2: grid-based analysis</a></li>
+  <li><a href="#approach-3-metro-areas" id="toc-approach-3-metro-areas" class="nav-link" data-scroll-target="#approach-3-metro-areas">Approach 3: metro areas</a></li>
+  </ul></li>
+  <li><a href="#findings-and-analysis" id="toc-findings-and-analysis" class="nav-link" data-scroll-target="#findings-and-analysis">Findings and analysis</a>
+  <ul class="collapse">
+  <li><a href="#region-level-proximity-and-visitation" id="toc-region-level-proximity-and-visitation" class="nav-link" data-scroll-target="#region-level-proximity-and-visitation">Region-level proximity and visitation</a></li>
+  <li><a href="#neighbor-count-analysis" id="toc-neighbor-count-analysis" class="nav-link" data-scroll-target="#neighbor-count-analysis">Neighbor count analysis</a></li>
+  <li><a href="#grid-based-analysis" id="toc-grid-based-analysis" class="nav-link" data-scroll-target="#grid-based-analysis">Grid-based analysis</a></li>
+  <li><a href="#metro-areas" id="toc-metro-areas" class="nav-link" data-scroll-target="#metro-areas">Metro areas</a></li>
+  </ul></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  <li><a href="#appendix-summary-tables" id="toc-appendix-summary-tables" class="nav-link" data-scroll-target="#appendix-summary-tables">Appendix: summary tables</a>
+  <ul class="collapse">
+  <li><a href="#table-1.1-neighbor-count-summary-statistics" id="toc-table-1.1-neighbor-count-summary-statistics" class="nav-link" data-scroll-target="#table-1.1-neighbor-count-summary-statistics">Table 1.1: Neighbor count summary statistics</a></li>
+  <li><a href="#table-1.2-example-parks-by-neighbor-count" id="toc-table-1.2-example-parks-by-neighbor-count" class="nav-link" data-scroll-target="#table-1.2-example-parks-by-neighbor-count">Table 1.2: Example parks by neighbor count</a></li>
+  <li><a href="#table-2-grid-based-clustering-150-mile-grid-min-2-parks" id="toc-table-2-grid-based-clustering-150-mile-grid-min-2-parks" class="nav-link" data-scroll-target="#table-2-grid-based-clustering-150-mile-grid-min-2-parks">Table 2: Grid-based clustering (150-mile grid, min 2 parks)</a></li>
+  <li><a href="#table-3-correlation-summary-across-approaches" id="toc-table-3-correlation-summary-across-approaches" class="nav-link" data-scroll-target="#table-3-correlation-summary-across-approaches">Table 3: Correlation summary across approaches</a></li>
+  </ul></li>
+  <li><a href="#michigan-zoom-in" id="toc-michigan-zoom-in" class="nav-link" data-scroll-target="#michigan-zoom-in">Michigan zoom-in</a></li>
+  <li><a href="#viability-of-claim" id="toc-viability-of-claim" class="nav-link" data-scroll-target="#viability-of-claim">Viability of claim</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">American national park visits: location density and visitation rates</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">spatial</div>
+    <div class="quarto-category">parks</div>
+    <div class="quarto-category">SI-699</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    Are parks visited more when they’re close together? A spatial analysis of clustering and visitation across U.S. national parks.
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">February 8, 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>This project investigates whether the spatial distribution of U.S. national parks influences how often they are visited. The central question is intuitive but surprisingly under-examined: do parks that sit near other parks benefit from that proximity?</p>
+<p>For this project, our claim is that American National Parks visitation rates are higher in regions where national parks are geographically closer together, suggesting travelers are more likely to visit multiple parks within a dense cluster.</p>
+<p>Three guiding questions structure the analysis:</p>
+<ul>
+<li>Are parks in more clustered areas visited more often (i.e., in areas where multi-park visitation is more feasible)?</li>
+<li>Given how far apart parks are, how much visitation does a typical park get?</li>
+<li>Do parks with more nearby neighbors receive more visits?</li>
+</ul>
+<p>This hypothesis is based on the intuitive assumption that geographic proximity facilitates multi-park trips, potentially through reduced travel costs, shared infrastructure, and the ability to visit multiple destinations in a single vacation. If correct, we would expect tightly clustered parks to show higher per-park visitation rates than regions with widely dispersed parks.</p>
+<section id="data-choices-and-justifications" class="level2">
+<h2 class="anchored" data-anchor-id="data-choices-and-justifications">Data choices and justifications</h2>
+<p>Our first significant data choice was calculating the distances between the parks in each region. As the class dataset did not include geographical data, we decided to import an external dataset and matched parks by name to merge the data. After some light data cleaning to remove duplicates and standardize park names, we utilized the latitude and longitude in the Haversine Formula to calculate the distance between all pairs of parks across regions. We chose to use this formula due to its ability to calculate distances across a sphere using these coordinates accurately, as mentioned in the educational data science site <a href="https://www.geeksforgeeks.org/dsa/haversine-formula-to-find-distance-between-two-points-on-a-sphere">GeeksForGeeks</a>.</p>
+<p>Additionally, after finding the Haversine distance between each park, we used a multiplier of 1.4 on each value to account for the variations in road structures (as the distances between each park are likely not straight lines). According to a <a href="https://doi.org/10.1080/00330124.2011.583586">study published in the National Library of Medicine</a> titled “A Nationwide Comparison of Driving Distance Versus Straight-Line Distance to Hospitals”, in nearly “all locations within the United States,” applying a detour index of about 1.4 to the “straight-line distance” is an “adequate proxy for travel distance”. Though this does not account for more severe detours or uncrossable geographic features (roadblocks, lakes, rivers, etc.), we thought it was a good first step to take to approximate the distance (in miles).</p>
+<p>Finally, among our three approaches (discussed below in more detail), one approach involved investigating whether parks closer to metropolitan areas showed any changes in visitation compared to more remote areas. To do this, we used the <a href="https://simplemaps.com/data/us-metros">US Metro Areas Database</a>, which contains coordinates and population data. Then, for each metro area, we used the same Haversine distance calculation to calculate its distance between all parks, only keeping the parks that were within a 300-mile radius of a metro area to ensure we only examined parks that were reasonably accessible from major metropolitan cities (and minimizing any potential bias, such as parks with very low visits or that were remote).</p>
+</section>
+<section id="approaches" class="level2">
+<h2 class="anchored" data-anchor-id="approaches">Approaches</h2>
+<p>We used three complementary spatial approaches to test our hypothesis at different scales.</p>
+<section id="approach-1-neighbor-count" class="level3">
+<h3 class="anchored" data-anchor-id="approach-1-neighbor-count">Approach 1: neighbor count</h3>
+<p>For this approach, we used a pairwise distance calculation, combined with a Pearson Correlation (r) analysis, to test the relationship between park clustering and visitation at an individual park level. For neighbor counting, we defined a spatial radius of 300 miles, which is roughly a 4–6 hour drive. For each park, we counted the number of other parks within this radius and grouped the parks into categories: Isolated (0), Few (1–2), Some (3–5), and Many (6+) neighbors. In addition to calculating the correlation (r) based on the neighbor count (independent variable) and the total recreation visits for each park (dependent variable), we explored the visitation distributions across these categories through summary statistics and box plots.</p>
+</section>
+<section id="approach-2-grid-based-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="approach-2-grid-based-analysis">Approach 2: grid-based analysis</h3>
+<p>For this approach, we used geographical binning (as well as per-park normalization and correlation analysis to minimize any effects regional distribution may have had) to test clustering effects at a tighter spatial scale. To do this, we divided the U.S. into a grid (we chose 150 by 150 miles, roughly) and converted the grid size from miles to degrees, approximated using 1 degree ≈ 69 miles for both latitude and longitude. While this created some distortion at higher latitudes, most parks fell within similar latitude bands, minimizing the effect.</p>
+<p>For each grid square, we calculated park count, total visits, and average visit per park (total visits divided by park count). Without this normalization, grids with more parks would automatically have higher total visits. By averaging visits per park, the analysis isolates the effect of density rather than just quantity.</p>
+<p>To have meaningful clustering comparisons, we also only counted the grids that contained at least two parks. We calculated r based on the number of parks in each grid (our independent variable) and the average visits per park in that grid (dependent variable).</p>
+</section>
+<section id="approach-3-metro-areas" class="level3">
+<h3 class="anchored" data-anchor-id="approach-3-metro-areas">Approach 3: metro areas</h3>
+<p>For each metropolitan area, we identified all parks within a radius and calculated park count near that metro, total visits from all nearby parks, and average visits per park. This normalization was, again, essential, as metros surrounded by many parks should not automatically appear as more “successful” simply because they had more parks within their radius. By normalizing to average visits per park, we were able to test whether individual parks near clustered metro areas receive more visits than parks near metro areas with fewer park options, potentially due to shared tourism infrastructure or marketing.</p>
+<p>This approach also allowed us to examine whether metro population size correlates with park visitation, helping distinguish between clustering effects and general urban accessibility effects.</p>
+</section>
+</section>
+<section id="findings-and-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="findings-and-analysis">Findings and analysis</h2>
+<section id="region-level-proximity-and-visitation" class="level3">
+<h3 class="anchored" data-anchor-id="region-level-proximity-and-visitation">Region-level proximity and visitation</h3>
+<p>The first analysis uses region-level network density to test the broad claim that parks in denser networks attract more visitors.</p>
+<div id="cell-8" class="cell" data-execution_count="21">
+<div class="cell-output cell-output-stdout">
+<pre><code>Region density vs avg visits-per-park correlation: r = -0.575</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="21">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Region</th>
+<th data-quarto-table-cell-role="th">ParkCount</th>
+<th data-quarto-table-cell-role="th">TotalVisits</th>
+<th data-quarto-table-cell-role="th">AvgVisitsPerPark</th>
+<th data-quarto-table-cell-role="th">MedianVisitsPerPark</th>
+<th data-quarto-table-cell-role="th">AvgInterParkRoadMiles</th>
+<th data-quarto-table-cell-role="th">MedianInterParkRoadMiles</th>
+<th data-quarto-table-cell-role="th">NetworkDensity500</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">5</td>
+<td>Southeast</td>
+<td>7</td>
+<td>591324837</td>
+<td>8.447498e+07</td>
+<td>24954616.0</td>
+<td>1081.837114</td>
+<td>1025.174201</td>
+<td>0.285714</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>Northeast</td>
+<td>3</td>
+<td>243951367</td>
+<td>8.131712e+07</td>
+<td>68391485.0</td>
+<td>750.387388</td>
+<td>924.900170</td>
+<td>0.333333</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1</td>
+<td>Intermountain</td>
+<td>19</td>
+<td>1117964867</td>
+<td>5.884026e+07</td>
+<td>31377677.0</td>
+<td>634.390994</td>
+<td>577.978245</td>
+<td>0.649123</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2</td>
+<td>Midwest</td>
+<td>9</td>
+<td>462819570</td>
+<td>5.142440e+07</td>
+<td>45958032.0</td>
+<td>929.758775</td>
+<td>999.985921</td>
+<td>0.250000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>Pacific West</td>
+<td>17</td>
+<td>745932335</td>
+<td>4.387837e+07</td>
+<td>30814121.0</td>
+<td>1936.122882</td>
+<td>940.160945</td>
+<td>0.419118</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">0</td>
+<td>Alaska</td>
+<td>8</td>
+<td>48189933</td>
+<td>6.023742e+06</td>
+<td>1905470.0</td>
+<td>627.458897</td>
+<td>649.480598</td>
+<td>0.607143</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="cell-9" class="cell" data-execution_count="22">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-6-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="neighbor-count-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="neighbor-count-analysis">Neighbor count analysis</h3>
+<p>Our neighbor count analysis had a correlation coefficient of r = 0.020, indicating that there is virtually no correlation between the number of neighbors a park has and its visitation at the 300-mile scale.</p>
+<p>Our hypothesis is not supported at the individual park level. For example, Acadia Park, which is completely isolated, received 4.5 times more visits than Capitol Reef, which had 8 neighbors (the highest neighbor count). Capitol Reef, besides being the most clustered park, had 30M visits, and Bryce Canyon was right behind (7 neighbors, 54M visits). Despite having zero neighbors (within the 300-mile radius), Acadia still received 134M visits. This is perhaps the clearest example that proximity to other parks does not predict higher visitation.</p>
+<div id="cell-11" class="cell" data-execution_count="23">
+<div class="cell-output cell-output-stdout">
+<pre><code>Neighbor count vs total visits correlation: r = 0.020</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="23">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">ParkName</th>
+<th data-quarto-table-cell-role="th">Region</th>
+<th data-quarto-table-cell-role="th">TotalVisits</th>
+<th data-quarto-table-cell-role="th">NeighborCount</th>
+<th data-quarto-table-cell-role="th">Closest3Neighbors</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8</td>
+<td>Capitol Reef NP</td>
+<td>Intermountain</td>
+<td>29963941</td>
+<td>8</td>
+<td>Canyonlands NP, Bryce Canyon NP, Arches NP</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">6</td>
+<td>Bryce Canyon NP</td>
+<td>Intermountain</td>
+<td>54254911</td>
+<td>7</td>
+<td>Zion NP, Capitol Reef NP, Grand Canyon NP</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">41</td>
+<td>Mesa Verde NP</td>
+<td>Intermountain</td>
+<td>25517152</td>
+<td>7</td>
+<td>Black Canyon of the Gunnison NP, Canyonlands N...</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">7</td>
+<td>Canyonlands NP</td>
+<td>Intermountain</td>
+<td>18491617</td>
+<td>7</td>
+<td>Arches NP, Capitol Reef NP, Mesa Verde NP</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">62</td>
+<td>Zion NP</td>
+<td>Intermountain</td>
+<td>119116876</td>
+<td>6</td>
+<td>Bryce Canyon NP, Grand Canyon NP, Capitol Reef NP</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>Arches NP</td>
+<td>Intermountain</td>
+<td>39675085</td>
+<td>6</td>
+<td>Canyonlands NP, Capitol Reef NP, Black Canyon ...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">5</td>
+<td>Black Canyon of the Gunnison NP</td>
+<td>Intermountain</td>
+<td>10973033</td>
+<td>6</td>
+<td>Arches NP, Mesa Verde NP, Canyonlands NP</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">22</td>
+<td>Grand Canyon NP</td>
+<td>Intermountain</td>
+<td>186529149</td>
+<td>5</td>
+<td>Zion NP, Bryce Canyon NP, Petrified Forest NP</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">61</td>
+<td>Yosemite NP</td>
+<td>Pacific West</td>
+<td>155709017</td>
+<td>5</td>
+<td>Kings Canyon NP, Sequoia NP, Pinnacles NP</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">52</td>
+<td>Sequoia NP</td>
+<td>Pacific West</td>
+<td>45109693</td>
+<td>5</td>
+<td>Kings Canyon NP, Death Valley NP, Yosemite NP</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="cell-12" class="cell" data-execution_count="29">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-8-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="grid-based-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="grid-based-analysis">Grid-based analysis</h3>
+<p>For our grid-based approach, we found a strong, positive correlation between park proximity and the number of visits. From the 54 grids we created, only seven grids had more than two parks — five grids had two parks, and two grids had three parks. The correlation coefficient of r = 0.934, though extremely strong, only occurred because we controlled for regional differences (through creating grids). After creating our grids, we saw high-density clusters (e.g.&nbsp;Bryce/Grand Canyon/Zion Parks, with an average of 120M visits per park; Kings Canyon/Sequoia/Yosemite Parks, with an average of 77M visits) as well as grids with lower density (e.g.&nbsp;Carlsbad/Guadalupe Parks with an average of 16M). This suggests the visitation benefits of clustering, in our grid analysis, only occur at tighter spatial scales. When we increase the threshold from 150 to 300 miles, for example, we get 14 grid squares with more than two parks and one grid square with five parks. The correlation then becomes −0.105, suggesting that at an even slightly broader threshold, the clustering “benefits” for visitations disappear. Once parks are more spaced out, other influencing factors, such as accessibility or regional tourism, take precedence over clustering.</p>
+<div id="cell-14" class="cell" data-execution_count="24">
+<div class="cell-output cell-output-stdout">
+<pre><code>Grid 150 miles: r = 0.934 (n=7 grids)
+Grid 300 miles: r = -0.105 (n=14 grids)</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="24">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">GridID</th>
+<th data-quarto-table-cell-role="th">ParkCount</th>
+<th data-quarto-table-cell-role="th">TotalVisits</th>
+<th data-quarto-table-cell-role="th">AvgVisitsPerPark</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">14</td>
+<td>26_23</td>
+<td>3</td>
+<td>359900936</td>
+<td>1.199670e+08</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">10</td>
+<td>23_23</td>
+<td>3</td>
+<td>231632831</td>
+<td>7.721094e+07</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8</td>
+<td>22_28</td>
+<td>2</td>
+<td>67511157</td>
+<td>3.375558e+07</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">40</td>
+<td>41_18</td>
+<td>2</td>
+<td>62514626</td>
+<td>3.125731e+07</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">22</td>
+<td>28_24</td>
+<td>2</td>
+<td>50648118</td>
+<td>2.532406e+07</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">17</td>
+<td>27_24</td>
+<td>2</td>
+<td>48455558</td>
+<td>2.422778e+07</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">26</td>
+<td>30_21</td>
+<td>2</td>
+<td>32479413</td>
+<td>1.623971e+07</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="cell-15" class="cell" data-execution_count="30">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-10-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="metro-areas" class="level3">
+<h3 class="anchored" data-anchor-id="metro-areas">Metro areas</h3>
+<p>Our metro area analysis found that there was a slightly negative correlation between the number of parks in a metropolitan area and both average visits and average visits per park (−0.113 and −0.018, respectively). There were 282 metro areas with national parks within 300 miles of it. The parks that were closer to metro areas appeared to have fewer visits per park, rather than more. While a park’s proximity to urban areas doesn’t directly enhance clustering benefits, this may indicate that the parks have competition for visits (e.g.&nbsp;parks closer to metro areas may have to compete with restaurants, museums, and other entertainment options for visits). In other words, park proximity alone is not a sufficient driver for increased visitation.</p>
+<div id="cell-17" class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Metro park count vs avg visits-per-park: r = -0.113
+Metro population vs avg visits-per-park: r = -0.019</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="25">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">MetroArea</th>
+<th data-quarto-table-cell-role="th">State</th>
+<th data-quarto-table-cell-role="th">Population</th>
+<th data-quarto-table-cell-role="th">ParkCount</th>
+<th data-quarto-table-cell-role="th">TotalVisits</th>
+<th data-quarto-table-cell-role="th">AvgVisitsPerPark</th>
+<th data-quarto-table-cell-role="th">Parks</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">21</td>
+<td>Las Vegas</td>
+<td>NV</td>
+<td>2336573</td>
+<td>8</td>
+<td>547083340</td>
+<td>6.838542e+07</td>
+<td>Bryce Canyon NP, Death Valley NP, Grand Canyon...</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">209</td>
+<td>Flagstaff, AZ</td>
+<td>AZ</td>
+<td>144472</td>
+<td>7</td>
+<td>465251323</td>
+<td>6.646447e+07</td>
+<td>Bryce Canyon NP, Canyonlands NP, Capitol Reef ...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">160</td>
+<td>St. George, UT</td>
+<td>UT</td>
+<td>202452</td>
+<td>7</td>
+<td>454392049</td>
+<td>6.491315e+07</td>
+<td>Bryce Canyon NP, Canyonlands NP, Capitol Reef ...</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">44</td>
+<td>Bakersfield</td>
+<td>CA</td>
+<td>913820</td>
+<td>7</td>
+<td>362031910</td>
+<td>5.171884e+07</td>
+<td>Channel Islands NP, Death Valley NP, Joshua Tr...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">190</td>
+<td>Grand Junction, CO</td>
+<td>CO</td>
+<td>159681</td>
+<td>7</td>
+<td>278110335</td>
+<td>3.973005e+07</td>
+<td>Arches NP, Black Canyon of the Gunnison NP, Ca...</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">232</td>
+<td>Farmington, NM</td>
+<td>NM</td>
+<td>120675</td>
+<td>7</td>
+<td>169314178</td>
+<td>2.418774e+07</td>
+<td>Arches NP, Black Canyon of the Gunnison NP, Ca...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">132</td>
+<td>Prescott Valley</td>
+<td>AZ</td>
+<td>249081</td>
+<td>6</td>
+<td>489132599</td>
+<td>8.152210e+07</td>
+<td>Bryce Canyon NP, Grand Canyon NP, Joshua Tree ...</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">35</td>
+<td>Fresno, CA</td>
+<td>CA</td>
+<td>1180020</td>
+<td>6</td>
+<td>296808875</td>
+<td>4.946815e+07</td>
+<td>Channel Islands NP, Death Valley NP, Kings Can...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">79</td>
+<td>Visalia, CA</td>
+<td>CA</td>
+<td>479468</td>
+<td>6</td>
+<td>296808875</td>
+<td>4.946815e+07</td>
+<td>Channel Islands NP, Death Valley NP, Kings Can...</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">122</td>
+<td>San Luis Obispo</td>
+<td>CA</td>
+<td>281639</td>
+<td>6</td>
+<td>296808875</td>
+<td>4.946815e+07</td>
+<td>Channel Islands NP, Death Valley NP, Kings Can...</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>Our hypothesis that geographic clustering increases park visitation is context-dependent. At the broad spatial scale (300-mile radius), clustering shows no effect (r = 0.020), suggesting individual park characteristics dominate visitation decisions. However, within tight geographic clusters (150-mile grids), we DO observe a very strong positive relationship (r = 0.934), indicating that when parks are “truly” close, multi-park tourism does boost visitation. This suggests a distance threshold: parks must be within day-trip distance (~150 miles) for clustering benefits to materialize.</p>
+<div id="cell-19" class="cell" data-execution_count="26">
+<div class="cell-output cell-output-display" data-execution_count="26">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Analysis</th>
+<th data-quarto-table-cell-role="th">Correlation_r</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>Findings 1 - Region density vs avg visits/park</td>
+<td>-0.575353</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>Findings 2 - Neighbor count (300 miles)</td>
+<td>0.020248</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>Findings 2 - Grid analysis (150 miles)</td>
+<td>0.933781</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>Findings 2 - Grid analysis (300 miles)</td>
+<td>-0.105252</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>Findings 2 - Metro park count vs avg visits/park</td>
+<td>-0.112590</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>Findings 2 - Metro population vs avg visits/park</td>
+<td>-0.018823</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="cell-20" class="cell" data-execution_count="28">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-13-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="cell-21" class="cell" data-execution_count="31">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-14-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="appendix-summary-tables" class="level2">
+<h2 class="anchored" data-anchor-id="appendix-summary-tables">Appendix: summary tables</h2>
+<section id="table-1.1-neighbor-count-summary-statistics" class="level3">
+<h3 class="anchored" data-anchor-id="table-1.1-neighbor-count-summary-statistics">Table 1.1: Neighbor count summary statistics</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Category</th>
+<th>Count</th>
+<th>Mean visits</th>
+<th>Median visits</th>
+<th>Std</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Isolated (0)</td>
+<td>19</td>
+<td>72.7M</td>
+<td>48.3M</td>
+<td>73.7M</td>
+</tr>
+<tr class="even">
+<td>Few (1–2)</td>
+<td>15</td>
+<td>56.4M</td>
+<td>34.9M</td>
+<td>58.0M</td>
+</tr>
+<tr class="odd">
+<td>Some (3–5)</td>
+<td>13</td>
+<td>51.3M</td>
+<td>30.3M</td>
+<td>54.1M</td>
+</tr>
+<tr class="even">
+<td>Many (6+)</td>
+<td>7</td>
+<td>62.1M</td>
+<td>54.0M</td>
+<td>42.3M</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="table-1.2-example-parks-by-neighbor-count" class="level3">
+<h3 class="anchored" data-anchor-id="table-1.2-example-parks-by-neighbor-count">Table 1.2: Example parks by neighbor count</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Park</th>
+<th>Neighbors</th>
+<th>Total recreation visits</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Acadia</td>
+<td>0</td>
+<td>134M</td>
+</tr>
+<tr class="even">
+<td>Capitol Reef</td>
+<td>8</td>
+<td>30M</td>
+</tr>
+<tr class="odd">
+<td>Bryce Canyon</td>
+<td>7</td>
+<td>54M</td>
+</tr>
+<tr class="even">
+<td>Great Smoky Mountains</td>
+<td>0</td>
+<td>467M</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="table-2-grid-based-clustering-150-mile-grid-min-2-parks" class="level3">
+<h3 class="anchored" data-anchor-id="table-2-grid-based-clustering-150-mile-grid-min-2-parks">Table 2: Grid-based clustering (150-mile grid, min 2 parks)</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Grid</th>
+<th>Parks</th>
+<th>Avg visits/park</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Bryce/Grand Canyon/Zion</td>
+<td>3</td>
+<td>120M</td>
+</tr>
+<tr class="even">
+<td>Kings Canyon/Sequoia/Yosemite</td>
+<td>3</td>
+<td>77M</td>
+</tr>
+<tr class="odd">
+<td>Carlsbad/Guadalupe</td>
+<td>2</td>
+<td>16M</td>
+</tr>
+<tr class="even">
+<td>Cuyahoga/Congaree</td>
+<td>2</td>
+<td>45M</td>
+</tr>
+<tr class="odd">
+<td>Theodore Roosevelt/Wind Cave</td>
+<td>2</td>
+<td>22M</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="table-3-correlation-summary-across-approaches" class="level3">
+<h3 class="anchored" data-anchor-id="table-3-correlation-summary-across-approaches">Table 3: Correlation summary across approaches</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 27%">
+<col style="width: 19%">
+<col style="width: 8%">
+<col style="width: 44%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Approach</th>
+<th>Scale</th>
+<th>r</th>
+<th>Interpretation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Neighbor count</td>
+<td>300 mi</td>
+<td>0.020</td>
+<td>No correlation</td>
+</tr>
+<tr class="even">
+<td>Grid (150 mi)</td>
+<td>150 mi</td>
+<td>0.934</td>
+<td>Strong positive</td>
+</tr>
+<tr class="odd">
+<td>Grid (300 mi)</td>
+<td>300 mi</td>
+<td>−0.105</td>
+<td>Slight negative</td>
+</tr>
+<tr class="even">
+<td>Metro (park count vs avg visits)</td>
+<td>300 mi</td>
+<td>−0.113</td>
+<td>Slight negative</td>
+</tr>
+<tr class="odd">
+<td>Metro (park count vs avg visits/park)</td>
+<td>300 mi</td>
+<td>−0.018</td>
+<td>No correlation</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="michigan-zoom-in" class="level2">
+<h2 class="anchored" data-anchor-id="michigan-zoom-in">Michigan zoom-in</h2>
+<p>This section uses the same 300-mile metro framework to check how the national mobility narrative translates to Michigan. Michigan supports the broader conclusion: access breadth is limited for many metros, which constrains multi-park chaining opportunities. Demand variation exists, but reachable park count and distance structure remain central mobility constraints.</p>
+<div id="cell-24" class="cell" data-execution_count="32">
+<div class="cell-output cell-output-stdout">
+<pre><code>Michigan metros analyzed: 14</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="32">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">MetroArea</th>
+<th data-quarto-table-cell-role="th">State</th>
+<th data-quarto-table-cell-role="th">Population</th>
+<th data-quarto-table-cell-role="th">ParkCount</th>
+<th data-quarto-table-cell-role="th">TotalVisits</th>
+<th data-quarto-table-cell-role="th">AvgVisitsPerPark</th>
+<th data-quarto-table-cell-role="th">MinDistance</th>
+<th data-quarto-table-cell-role="th">MedianDistance</th>
+<th data-quarto-table-cell-role="th">Parks</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">10</td>
+<td>Detroit</td>
+<td>MI</td>
+<td>4342304</td>
+<td>2</td>
+<td>182196811</td>
+<td>91098405.5</td>
+<td>187.418999</td>
+<td>239.966300</td>
+<td>Cuyahoga Valley NP, Indiana Dunes NP</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">80</td>
+<td>Lansing</td>
+<td>MI</td>
+<td>473177</td>
+<td>2</td>
+<td>182196811</td>
+<td>91098405.5</td>
+<td>203.057118</td>
+<td>232.509212</td>
+<td>Cuyahoga Valley NP, Indiana Dunes NP</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">94</td>
+<td>Flint, MI</td>
+<td>MI</td>
+<td>401522</td>
+<td>2</td>
+<td>182196811</td>
+<td>91098405.5</td>
+<td>231.587500</td>
+<td>252.481762</td>
+<td>Cuyahoga Valley NP, Indiana Dunes NP</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">107</td>
+<td>Ann Arbor, MI</td>
+<td>MI</td>
+<td>365536</td>
+<td>2</td>
+<td>182196811</td>
+<td>91098405.5</td>
+<td>192.062305</td>
+<td>215.199470</td>
+<td>Cuyahoga Valley NP, Indiana Dunes NP</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">167</td>
+<td>Saginaw, MI</td>
+<td>MI</td>
+<td>187782</td>
+<td>2</td>
+<td>182196811</td>
+<td>91098405.5</td>
+<td>268.713666</td>
+<td>269.579488</td>
+<td>Cuyahoga Valley NP, Indiana Dunes NP</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">191</td>
+<td>Jackson, MI</td>
+<td>MI</td>
+<td>159424</td>
+<td>2</td>
+<td>182196811</td>
+<td>91098405.5</td>
+<td>197.692486</td>
+<td>213.429534</td>
+<td>Cuyahoga Valley NP, Indiana Dunes NP</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">200</td>
+<td>Monroe, MI</td>
+<td>MI</td>
+<td>155045</td>
+<td>2</td>
+<td>182196811</td>
+<td>91098405.5</td>
+<td>158.619140</td>
+<td>206.681449</td>
+<td>Cuyahoga Valley NP, Indiana Dunes NP</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">217</td>
+<td>Battle Creek, MI</td>
+<td>MI</td>
+<td>133366</td>
+<td>2</td>
+<td>182196811</td>
+<td>91098405.5</td>
+<td>158.031305</td>
+<td>212.871561</td>
+<td>Cuyahoga Valley NP, Indiana Dunes NP</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">257</td>
+<td>Bay City, MI</td>
+<td>MI</td>
+<td>102500</td>
+<td>2</td>
+<td>182196811</td>
+<td>91098405.5</td>
+<td>294.638693</td>
+<td>295.068213</td>
+<td>Cuyahoga Valley NP, Indiana Dunes NP</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">36</td>
+<td>Grand Rapids</td>
+<td>MI</td>
+<td>1162950</td>
+<td>1</td>
+<td>83396931</td>
+<td>83396931.0</td>
+<td>174.372182</td>
+<td>174.372182</td>
+<td>Indiana Dunes NP</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="cell-25" class="cell" data-execution_count="33">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-16-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="cell-26" class="cell" data-execution_count="34">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-17-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="34">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">MetroArea</th>
+<th data-quarto-table-cell-role="th">Rank</th>
+<th data-quarto-table-cell-role="th">ParkName</th>
+<th data-quarto-table-cell-role="th">DistanceMiles</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>Detroit</td>
+<td>1</td>
+<td>Cuyahoga Valley NP</td>
+<td>187.418999</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>Detroit</td>
+<td>2</td>
+<td>Indiana Dunes NP</td>
+<td>292.513601</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>Detroit</td>
+<td>3</td>
+<td>New River Gorge NP &amp; PRES</td>
+<td>476.862841</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>Detroit</td>
+<td>4</td>
+<td>Shenandoah NP</td>
+<td>540.872612</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>Detroit</td>
+<td>5</td>
+<td>Mammoth Cave NP</td>
+<td>576.394526</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>Grand Rapids</td>
+<td>1</td>
+<td>Indiana Dunes NP</td>
+<td>174.372182</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6</td>
+<td>Grand Rapids</td>
+<td>2</td>
+<td>Cuyahoga Valley NP</td>
+<td>324.928538</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">7</td>
+<td>Grand Rapids</td>
+<td>3</td>
+<td>Isle Royale NP</td>
+<td>537.860967</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8</td>
+<td>Grand Rapids</td>
+<td>4</td>
+<td>Gateway Arch NP</td>
+<td>547.534718</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">9</td>
+<td>Grand Rapids</td>
+<td>5</td>
+<td>Mammoth Cave NP</td>
+<td>564.259895</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">10</td>
+<td>Lansing</td>
+<td>1</td>
+<td>Indiana Dunes NP</td>
+<td>203.057118</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">11</td>
+<td>Lansing</td>
+<td>2</td>
+<td>Cuyahoga Valley NP</td>
+<td>261.961306</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">12</td>
+<td>Lansing</td>
+<td>3</td>
+<td>New River Gorge NP &amp; PRES</td>
+<td>518.781938</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">13</td>
+<td>Lansing</td>
+<td>4</td>
+<td>Mammoth Cave NP</td>
+<td>546.549857</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">14</td>
+<td>Lansing</td>
+<td>5</td>
+<td>Gateway Arch NP</td>
+<td>568.775970</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">15</td>
+<td>Flint, MI</td>
+<td>1</td>
+<td>Cuyahoga Valley NP</td>
+<td>231.587500</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">16</td>
+<td>Flint, MI</td>
+<td>2</td>
+<td>Indiana Dunes NP</td>
+<td>273.376024</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">17</td>
+<td>Flint, MI</td>
+<td>3</td>
+<td>New River Gorge NP &amp; PRES</td>
+<td>516.361714</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">18</td>
+<td>Flint, MI</td>
+<td>4</td>
+<td>Shenandoah NP</td>
+<td>585.190712</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">19</td>
+<td>Flint, MI</td>
+<td>5</td>
+<td>Isle Royale NP</td>
+<td>590.410629</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="cell-27" class="cell" data-execution_count="35">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-18-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="viability-of-claim" class="level2">
+<h2 class="anchored" data-anchor-id="viability-of-claim">Viability of claim</h2>
+<p>Due to our choices of aggregating park visitations and normalizing across regions in our grid-based analysis, we cannot easily generalize our claim. Particularly with our aggregation — because we focus on total park visits, rather than investigating visitation types or seasonal patterns, our ability to conclude why specific parks receive a certain level of visitors is limited. Our inclusion of a distance threshold also means our findings are mainly applicable to densely clustered parks, rather than those spread out over larger areas. However, we can still evaluate the broader structural relationship between average visitation numbers and the distribution of parks within regions.</p>
+<p>Despite these limitations, we do believe the main pattern in our claim would hold in the future. The general trend identified that tightly clustered parks (specifically, within 150 miles of one another) would see higher average visits and would likely remain the same. The number of visits to parks in a region will not solely depend on their proximity to one another; other factors (such as accessibility, tourism, marketing, isolated regions, or climate) will remain factors. The geographic structure of the park regions and surrounding population density will stay stable over time.</p>
+<p>If this claim were to hold for other types of parks, it would likely depend on whether the other park systems had a similar geographic clustering and the feasibility of traveling. For example, in other parks that were laid out in a similar way to the national parks (e.g., regions with many parks in proximity that could be realistically visited in a single trip), using proximity to investigate visitation rates will likely be fruitful. For park systems with fewer parks or that are more geographically isolated, proximity is unlikely to correlate to an increase in visitation rates on its own. Future work to ensure our claim is more broadly applicable (as mentioned above) would include integrating temporal analysis and visitation type.</p>
+</section>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
+<ul>
+<li>“Haversine Formula to Find Distance between Two Points on a Sphere.” <a href="https://www.geeksforgeeks.org/dsa/haversine-formula-to-find-distance-between-two-points-on-a-sphere">GeeksforGeeks</a>, 5 Sept.&nbsp;2022.</li>
+<li>The Devastator. “The United States National Parks.” <a href="https://www.kaggle.com/datasets/thedevastator/the-united-states-national-parks/data?select=df_2.csv">Kaggle</a>, 7 Nov.&nbsp;2022.</li>
+<li>Boscoe, Francis P., et al.&nbsp;“A nationwide comparison of driving distance versus straight-line distance to hospitals.” <em>The Professional Geographer</em>, vol.&nbsp;64, no. 2, May 2012, pp.&nbsp;188–196. <a href="https://doi.org/10.1080/00330124.2011.583586">doi:10.1080/00330124.2011.583586</a>.</li>
+<li>Walsh, Melanie and Keyes, Os. “U.S. National Park Visit Data (1979–2024) — Responsible Datasets in Context.” <a href="https://www.responsible-datasets-in-context.com/posts/np-data/?tab=data-essay">Responsible Datasets in Context</a>, 1 June 2024.</li>
+<li><a href="https://simplemaps.com/data/us-metros">US Metro Areas Database</a>, Simplemaps.com. Accessed 6 Feb.&nbsp;2026.</li>
+</ul>
+<p><em>Team: Shreya Gupta, Charlotte Parent, Rebecca Yedid. Course: SI 699, University of Michigan. Instructor: Professor Justine Zhang.</em></p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

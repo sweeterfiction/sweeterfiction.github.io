@@ -3,7 +3,7 @@ project:
   output-dir: docs
 
 website:
-  title: "sweeterfiction"
+  title: "sweeterfiction § blog"
   description: "notes on data & research"
   navbar:
     left:
@@ -17,9 +17,10 @@ website:
 
 format:
   html:
+    respect-user-color-scheme: true
     theme:
-      - cosmo
-      - styles.scss
+      - simplex
+      # - styles.scss
     toc: false
     fig-align: center
     html-math-method: mathjax

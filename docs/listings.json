@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/park-visitation/index.html",
       "/posts/airfare-viz/index.html",
       "/posts/redlining-det/index.html"
     ]
